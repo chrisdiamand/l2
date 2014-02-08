@@ -169,7 +169,12 @@ PT_ClassBody::PT_ClassBody(TokenList *T, TokenType finish) {
 }
 
 void PT_ClassBody::print() {
-    printf("ClassBody:\n");
+    std::list<PT_Decl *>::iterator it;
+    printf("--- ClassBody ---\n");
+    for (auto it = declarations->begin(); it != declarations->end(); it++) {
+        PT_Decl *d = *it;
+        d->print();
+    }
 }
 
 void PT_ClassDecl::print() {
