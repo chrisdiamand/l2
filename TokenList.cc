@@ -26,7 +26,7 @@
 void die(const char *, ...);
 
 /* This could be done with a table but it's not really worth bothering */
-char *scanner_token_name(TokenType t)
+char *TokenName(TokenType t)
 {
     /* No default case so the compiler will warn when a type is missing */
     switch (t)
@@ -64,8 +64,6 @@ char *scanner_token_name(TokenType t)
     }
     return "<?>";
 }
-
-
 
 /* FIXME: Add escape sequences \n etc */
 static char *read_quoted_string(InputSource *in)
@@ -223,18 +221,45 @@ static Token scan_next(InputSource *in) {
     return T;
 }
 
-Token TokenList::next() {
-    return scan_next(in);
+char *Token::name() {
+    return TokenName(type);
 }
 
-void TokenList::print() {
-    printf("Hi!\n");
+void Token::print() {
+    printf("%s", name());
 }
 
-/* Scan a file and return an array of all the tokens */
-TokenList::TokenList(InputSource *input)
-{
+TokenList::TokenList(InputSource *input) {
     in = input;
     next();
 }
 
+Token TokenList::next() {
+    ct = scan_next(in);
+    return ct;
+}
+
+void TokenList::expectedError(TokenType type) {
+    char *expected = TokenName(type);
+    if (ct.type == TOK_IDENTIFIER)
+        die("Expected %s, got %s \'%s\'",
+            expected, ct.name(), ct.value);
+    else
+        die("Expected %s, got %s",
+            expected, ct.name());
+}
+
+void TokenList::expect(TokenType type) {
+    if (ct.type != type) {
+        expectedError(type);
+        next();
+    }
+    next();
+}
+
+void TokenList::print() {
+    while (ct.type != TOK_EOF) {
+        ct.print();
+        next();
+    }
+}

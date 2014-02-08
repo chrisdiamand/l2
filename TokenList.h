@@ -22,8 +22,7 @@
 #include <stdio.h>
 #include "InputSource.h"
 
-enum TokenType
-{
+enum TokenType {
     TOK_NULL,
 
     TOK_OPEN_BRACKET,   /* ( */
@@ -73,18 +72,18 @@ class TokenList {
 private:
     std::list<Token>    tokens;
     InputSource         *in;
+    void expectedError(TokenType);
 
 public:
     TokenList(InputSource *);
 
     void print();
     Token next();
-    bool expect(TokenType);
+    void expect(TokenType);
 
-    Token               *cur;
+    Token               ct;
 };
 
 char *TokenName(TokenType type);
 
 #endif
-
