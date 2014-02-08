@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Chris Diamand
+ * Copyright (c) 2014 Chris Diamand
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
