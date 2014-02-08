@@ -4,6 +4,9 @@ src.append("InputSource.cc")
 src.append("ParseTree.cc")
 src.append("TokenList.cc")
 
-lang = CProg("l2", src, flags = "-Wall -pedantic -Wno-deprecated-writable-strings")
+CFLAGS = "-Wall -pedantic -std=c++11 "
+CFLAGS += "-Wno-deprecated-writable-strings"
+
+lang = CProg("l2", src, flags = CFLAGS)
 
 makefile = Makefile([lang])
