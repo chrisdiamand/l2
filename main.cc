@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "ParseTree.h"
 #include "TokenList.h"
 
 void die(const char *fmt, ...)
@@ -31,8 +32,9 @@ void die(const char *fmt, ...)
 
 int main(int argc, char **argv)
 {
-    TokenList *toks = NULL;
     InputSource *in = NULL;
+    TokenList *toks = NULL;
+    ParseTree *pt = NULL;
 
     if (argc > 1)
         in = new FileInputSource(argv[1]);
@@ -40,7 +42,8 @@ int main(int argc, char **argv)
         in = new FileInputSource(stdin);
 
     toks = new TokenList(in);
-    toks->print();
+    pt = new PT_ClassBody(toks, TOK_EOF);
+    pt->print();
 
     return 0;
 }

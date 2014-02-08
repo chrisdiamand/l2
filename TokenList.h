@@ -27,11 +27,8 @@ enum TokenType {
 
     TOK_OPEN_BRACKET,   /* ( */
     TOK_CLOSED_BRACKET, /* ) */
-    //TOK_STARTBLOCK,     /* { */
-    //TOK_ENDBLOCK,       /* } */
 
     TOK_IDENTIFIER,     /* [a-z|A-Z|_]+ */
-    TOK_CLASSNAME,      /* Identifier recognised as a class name */
     TOK_INT,            /* 234 */
     TOK_DECIMAL,        /* 3.141 */
     TOK_STRING,         /* "words" */
@@ -72,7 +69,6 @@ class TokenList {
 private:
     std::list<Token>    tokens;
     InputSource         *in;
-    void expectedError(TokenType);
 
 public:
     TokenList(InputSource *);
@@ -80,6 +76,7 @@ public:
     void print();
     Token next();
     void expect(TokenType);
+    void expectedError(char *);
 
     Token               ct;
 };

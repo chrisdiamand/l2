@@ -34,10 +34,7 @@ char *TokenName(TokenType t)
         case TOK_NULL:              return "null";
         case TOK_OPEN_BRACKET:      return "\'(\'";
         case TOK_CLOSED_BRACKET:    return "\')\'";
-        //case TOK_STARTBLOCK:        return "\'{\'";
-        //case TOK_ENDBLOCK:          return "\'}\'";
         case TOK_IDENTIFIER:        return "identifier";
-        case TOK_CLASSNAME:         return "classname";
         case TOK_INT:               return "integer";
         case TOK_DECIMAL:           return "decimal";
         case TOK_STRING:            return "string";
@@ -204,8 +201,6 @@ static Token scan_next(InputSource *in) {
             case '/':   T.type = TOK_DIV;           return T;
             case '(':   T.type = TOK_OPEN_BRACKET;  return T;
             case ')':   T.type = TOK_CLOSED_BRACKET;return T;
-            //case '{':   T.type = TOK_STARTBLOCK;    return T;
-            //case '}':   T.type = TOK_ENDBLOCK;      return T;
             case ',':   T.type = TOK_COMMA;         return T;
             case ';':   T.type = TOK_SEMICOLON;     return T;
             default:
@@ -239,8 +234,7 @@ Token TokenList::next() {
     return ct;
 }
 
-void TokenList::expectedError(TokenType type) {
-    char *expected = TokenName(type);
+void TokenList::expectedError(char *expected) {
     if (ct.type == TOK_IDENTIFIER)
         die("Expected %s, got %s \'%s\'",
             expected, ct.name(), ct.value);
@@ -251,7 +245,7 @@ void TokenList::expectedError(TokenType type) {
 
 void TokenList::expect(TokenType type) {
     if (ct.type != type) {
-        expectedError(type);
+        expectedError(TokenName(type));
         next();
     }
     next();
