@@ -21,8 +21,6 @@
 
 #include "TokenList.h"
 
-void register_builtin_types(struct state *, struct class_t *);
-
 void die(const char *fmt, ...)
 {
     va_list ap;
