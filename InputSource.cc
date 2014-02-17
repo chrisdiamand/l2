@@ -55,7 +55,7 @@ FileInputSource::FileInputSource(char *filename) {
     fp = fopen(fname, "r");
 
     if (fp == NULL)
-        die("Could not open file \'%s\'\n", fname);
+        die("Could not open file \'%s\'", fname);
 }
 
 FileInputSource::FileInputSource(FILE *fptr) {
@@ -63,7 +63,7 @@ FileInputSource::FileInputSource(FILE *fptr) {
     fname = "<unknown>";
 
     if (fp == NULL)
-        die("Null file pointer passed to struct scan_file\n");
+        die("Null file pointer passed to struct scan_file");
 }
 
 char FileInputSource::actual_next() {
